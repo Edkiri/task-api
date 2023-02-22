@@ -1,4 +1,6 @@
 [X] Configurar Prettier and EsLint.
-[ ] Conectar base de datos.
-[ ] Asegurar que tenga autocompletado de métodos y propiedades.
-[ ] Crear un TODO. 
+[X] Conectar base de datos.
+[X] Conectar pgAdmin con goals-db.
+[X] Asegurar que tenga autocompletado de métodos y propiedades.
+[X] Configurar migraciones.
+[ ] Crear un TODO.
