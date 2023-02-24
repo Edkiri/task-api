@@ -31,10 +31,19 @@ export class TodosService {
     return todo;
   }
 
-  async update(id: number, data: UpdateTodoDto) {
+  async updateOne(id: number, data: UpdateTodoDto) {
     const oldTodo = await this.findOne(id);
     this.todosRepo.merge(oldTodo, data);
     const todo = await this.todosRepo.save(oldTodo);
     return todo;
+  }
+
+  async delete(id: number) {
+    const todoToDelete = await this.findOne(id);
+    await this.todosRepo.remove(todoToDelete);
+    return {
+      message: `Todo with id ${id} has been deleted`,
+      statusCode: 204,
+    };
   }
 }

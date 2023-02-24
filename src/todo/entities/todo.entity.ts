@@ -1,35 +1,14 @@
-import { Exclude } from 'class-transformer';
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { BaseEntity } from 'src/database/entities/base.entity';
+import { Column, Entity } from 'typeorm';
 
 @Entity('todos')
-export class Todo {
-  @PrimaryGeneratedColumn()
-  id: number;
-
-  @Exclude()
-  @CreateDateColumn({
-    name: 'created_at',
-    type: 'timestamptz',
-    default: () => 'CURRENT_TIMESTAMP',
-  })
-  createdAt: Date;
-
-  @Exclude()
-  @UpdateDateColumn({
-    name: 'updated_at',
-    type: 'timestamptz',
-    default: () => 'CURRENT_TIMESTAMP',
-  })
-  updatedAt: Date;
+export class Todo extends BaseEntity {
   @Column({ type: 'varchar', length: 255 })
-  name: string;
+  content: string;
 
   @Column({ type: 'boolean', default: false })
-  completed: boolean;
+  done: boolean;
+
+  @Column({ type: 'boolean', default: false })
+  important: boolean;
 }

@@ -1,7 +1,7 @@
 import { DataSource, DataSourceOptions } from 'typeorm';
 import * as dotenv from 'dotenv';
 import { Todo } from 'src/todo/entities/todo.entity';
-import { init1677054948003 } from './migrations/1677054948003-init';
+import { init1677263520853 } from './migrations/1677263520853-init';
 
 dotenv.config({
   path: '.env',
@@ -11,9 +11,9 @@ export const dataSourceOptions: DataSourceOptions = {
   type: 'postgres',
   url: process.env.DATABASE_URL,
   entities: [Todo],
-  migrations: [init1677054948003],
+  migrations: [init1677263520853],
   synchronize: false,
-  logging: true,
+  logging: false,
   ssl:
     process.env.NODE_ENV === 'production'
       ? {
