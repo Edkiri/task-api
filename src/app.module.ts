@@ -7,6 +7,7 @@ import { dataSourceOptions } from './database/data-source';
 import { environments } from './enviroments';
 import { TodosModule } from './todo/todo.module';
 import { ListModule } from './list/list.module';
+import { SeederModule } from './seeder/seeder.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { ListModule } from './list/list.module';
     TypeOrmModule.forRoot(dataSourceOptions),
     TodosModule,
     ListModule,
+    SeederModule,
   ],
   controllers: [],
   providers: [],
