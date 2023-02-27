@@ -1,5 +1,6 @@
 import { BaseEntity } from 'src/database/entities/base.entity';
-import { Column, Entity } from 'typeorm';
+import { List } from 'src/list/entities/list.entity';
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 
 @Entity('todos')
 export class Todo extends BaseEntity {
@@ -11,4 +12,8 @@ export class Todo extends BaseEntity {
 
   @Column({ type: 'boolean', default: false })
   important: boolean;
+
+  @ManyToOne(() => List)
+  @JoinColumn({ name: 'list_id' })
+  list: List;
 }

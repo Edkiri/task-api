@@ -8,4 +8,7 @@ export class CreateTodoDto {
 
   @IsBoolean()
   done: boolean;
+
+  @IsBoolean()
+  important?: boolean;
 }

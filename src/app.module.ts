@@ -6,6 +6,7 @@ import configSchema from './config/config.schema';
 import { dataSourceOptions } from './database/data-source';
 import { environments } from './enviroments';
 import { TodosModule } from './todo/todo.module';
+import { ListModule } from './list/list.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { TodosModule } from './todo/todo.module';
     }),
     TypeOrmModule.forRoot(dataSourceOptions),
     TodosModule,
+    ListModule,
   ],
   controllers: [],
   providers: [],
