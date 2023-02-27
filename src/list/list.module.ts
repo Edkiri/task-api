@@ -8,5 +8,6 @@ import { ListController } from './controllers/list.controller';
   imports: [TypeOrmModule.forFeature([List])],
   providers: [ListService],
   controllers: [ListController],
+  exports: [ListService],
 })
 export class ListModule {}

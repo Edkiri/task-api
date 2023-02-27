@@ -1,7 +1,9 @@
 import {
   IsBoolean,
   IsNotEmpty,
+  IsNumber,
   IsOptional,
+  IsPositive,
   IsString,
   Length,
 } from 'class-validator';
@@ -20,4 +22,9 @@ export class UpdateTodoDto {
   @Length(2)
   @IsOptional()
   content?: string;
+
+  @IsNumber()
+  @IsPositive()
+  @IsOptional()
+  listId?: string;
 }

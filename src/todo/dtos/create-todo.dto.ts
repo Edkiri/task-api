@@ -1,4 +1,12 @@
-import { IsBoolean, IsNotEmpty, IsString, Length } from 'class-validator';
+import {
+  IsBoolean,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsPositive,
+  IsString,
+  Length,
+} from 'class-validator';
 
 export class CreateTodoDto {
   @IsString()
@@ -7,8 +15,15 @@ export class CreateTodoDto {
   content: string;
 
   @IsBoolean()
-  done: boolean;
+  @IsOptional()
+  done?: boolean;
 
   @IsBoolean()
+  @IsOptional()
   important?: boolean;
+
+  @IsNumber()
+  @IsPositive()
+  @IsOptional()
+  listId?: number;
 }
