@@ -6,15 +6,25 @@ export class SeederService {
   constructor(private readonly listSeederService: ListSeederService) {}
 
   async seed() {
-    await this.listSeederService
-      .createDefaultList()
+    await this.lists()
       .then((completed) => {
-        if (completed) console.log('Default list has been created');
+        console.log();
         Promise.resolve(completed);
       })
       .catch((error) => {
         console.log('Failing creating default list');
         Promise.reject(error);
       });
+  }
+
+  async lists() {
+    return await Promise.all(this.listSeederService.create())
+      .then((createdLists) => {
+        if (!createdLists.some((item) => !item)) {
+          console.log(`${createdLists.length} lists has been created`);
+        }
+        return Promise.resolve(true);
+      })
+      .catch((error) => Promise.reject(error));
   }
 }

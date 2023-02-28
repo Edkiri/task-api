@@ -31,21 +31,21 @@ export class ListService {
     return list;
   }
 
-  async findOneBySlugName(slug_name: string): Promise<List> | undefined {
+  async findOneBySlugName(slugName: string): Promise<List> | undefined {
     const list = await this.listRepo.findOne({
-      where: { slug_name },
+      where: { slugName },
     });
     return list;
   }
 
   async create(data: CreateListDto) {
-    const slug_name = slugify(data.title);
-    const oldList = await this.findOneBySlugName(slug_name);
+    const slugName = slugify(data.title);
+    const oldList = await this.findOneBySlugName(slugName);
     if (oldList)
       throw new BadRequestException(
-        `A list with slug '${slug_name}' already exists'`,
+        `A list with slug '${slugName}' already exists'`,
       );
-    data['slug_name'] = slug_name;
+    data['slugName'] = slugName;
     const newList = this.listRepo.create(data);
     const list = await this.listRepo.save(newList);
     return list;
@@ -54,13 +54,13 @@ export class ListService {
   async updateOne(id: number, data: UpdateListDto) {
     const oldList = await this.findOne(id);
     if (data.title) {
-      const slug_name = slugify(data.title);
-      const oldList = await this.findOneBySlugName(slug_name);
+      const slugName = slugify(data.title);
+      const oldList = await this.findOneBySlugName(slugName);
       if (oldList)
         throw new BadRequestException(
-          `A list with slug '${slug_name}' already exists'`,
+          `A list with slug '${slugName}' already exists'`,
         );
-      data['slug_name'] = slug_name;
+      data['slugName'] = slugName;
     }
     this.listRepo.merge(oldList, data);
     const list = await this.listRepo.save(oldList);

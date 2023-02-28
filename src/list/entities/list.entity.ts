@@ -3,9 +3,9 @@ import { Column, Entity } from 'typeorm';
 
 @Entity('lists')
 export class List extends BaseEntity {
-  @Column({ type: 'varchar', length: 255, unique: true })
+  @Column({ type: 'varchar', length: 255 })
   title: string;
 
-  @Column({ type: 'varchar', length: 255, unique: true })
-  slug_name: string;
+  @Column({ name: 'slug_name', type: 'varchar', length: 255 })
+  slugName: string;
 }

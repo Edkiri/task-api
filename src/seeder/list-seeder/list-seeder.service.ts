@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { List } from 'src/list/entities/list.entity';
+import slugify from 'src/utils/slugify';
 import { Repository } from 'typeorm';
 
 @Injectable()
@@ -10,15 +11,22 @@ export class ListSeederService {
     private readonly listRepo: Repository<List>,
   ) {}
 
-  async createDefaultList(): Promise<List> | null {
-    const oldList = await this.listRepo.findOne({
-      where: { slug_name: 'my-day' },
+  create(): Array<Promise<List>> {
+    const defaultListTitles = ['My Day', 'Important'];
+    return defaultListTitles.map(async (listTitle: string) => {
+      return await this.listRepo
+        .findOne({ where: { title: listTitle } })
+        .then(async (dbList) => {
+          if (dbList) {
+            return Promise.resolve(null);
+          }
+          const newList = this.listRepo.create({
+            title: listTitle,
+            slugName: slugify(listTitle),
+          });
+          return this.listRepo.save(newList);
+        })
+        .catch((error) => Promise.reject(error));
     });
-    if (oldList) return;
-    const defaultList = this.listRepo.create({
-      title: 'My Day',
-      slug_name: 'my-day',
-    });
-    return this.listRepo.save(defaultList);
   }
 }
