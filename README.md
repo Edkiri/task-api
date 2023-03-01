@@ -19,3 +19,4 @@ Aplicación web para planear y organizar tareas.
 * Passport
 * Luxon
 * Docker
+* [task-ui](https://github.com/Edkiri/task-ui)
