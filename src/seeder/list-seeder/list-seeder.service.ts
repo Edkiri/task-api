@@ -12,7 +12,7 @@ export class ListSeederService {
   ) {}
 
   create(): Array<Promise<List>> {
-    const defaultListTitles = ['My Day', 'Important'];
+    const defaultListTitles = ['Goals App', 'Legalizacion España'];
     return defaultListTitles.map(async (listTitle: string) => {
       return await this.listRepo
         .findOne({ where: { title: listTitle } })

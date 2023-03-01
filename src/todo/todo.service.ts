@@ -33,8 +33,6 @@ export class TodosService {
     let list: List;
     if (data.listId) {
       list = await this.listService.findOne(data.listId);
-    } else {
-      list = await this.listService.findOneBySlugName('my-day');
     }
     newTodo.list = list;
     const todo = await this.todosRepo.save(newTodo);
@@ -43,7 +41,13 @@ export class TodosService {
 
   async updateOne(id: number, data: UpdateTodoDto) {
     const oldTodo = await this.findOne(id);
+    let list: List;
+    if (data.listId) {
+      list = await this.listService.findOne(data.listId);
+    }
+    oldTodo.list = list;
     this.todosRepo.merge(oldTodo, data);
+
     const todo = await this.todosRepo.save(oldTodo);
     return todo;
   }

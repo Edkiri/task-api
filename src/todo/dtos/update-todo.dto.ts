@@ -15,6 +15,10 @@ export class UpdateTodoDto {
 
   @IsBoolean()
   @IsOptional()
+  today?: boolean;
+
+  @IsBoolean()
+  @IsOptional()
   important?: boolean;
 
   @IsString()
@@ -26,5 +30,5 @@ export class UpdateTodoDto {
   @IsNumber()
   @IsPositive()
   @IsOptional()
-  listId?: string;
+  listId?: number;
 }

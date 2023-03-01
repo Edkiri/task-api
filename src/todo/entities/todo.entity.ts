@@ -13,7 +13,10 @@ export class Todo extends BaseEntity {
   @Column({ type: 'boolean', default: false })
   important: boolean;
 
-  @ManyToOne(() => List)
+  @Column({ type: 'boolean', default: false })
+  today: boolean;
+
+  @ManyToOne(() => List, { nullable: true })
   @JoinColumn({ name: 'list_id' })
-  list: List;
+  list?: List;
 }

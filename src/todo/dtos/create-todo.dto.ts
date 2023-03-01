@@ -16,7 +16,7 @@ export class CreateTodoDto {
 
   @IsBoolean()
   @IsOptional()
-  done?: boolean;
+  today?: boolean;
 
   @IsBoolean()
   @IsOptional()
