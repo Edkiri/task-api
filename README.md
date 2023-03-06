@@ -1,5 +1,7 @@
 # Task API
 Aplicación web para planear y organizar tareas.
+* [task-api](https://github.com/Edkiri/task-api)
+* [task-ui](https://github.com/Edkiri/task-ui)
 
 ### Los usuarios pueden:
 * Loguearse con Google.
@@ -19,4 +21,3 @@ Aplicación web para planear y organizar tareas.
 * Passport
 * Luxon
 * Docker
-* [task-ui](https://github.com/Edkiri/task-ui)
