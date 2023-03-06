@@ -16,7 +16,7 @@ export class Todo extends BaseEntity {
   @Column({ type: 'boolean', default: false })
   today: boolean;
 
-  @ManyToOne(() => List, { nullable: true })
+  @ManyToOne(() => List, { nullable: true, onDelete: 'CASCADE' })
   @JoinColumn({ name: 'list_id' })
   list?: List;
 }

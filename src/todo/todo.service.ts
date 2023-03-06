@@ -41,6 +41,7 @@ export class TodosService {
 
   async updateOne(id: number, data: UpdateTodoDto) {
     const oldTodo = await this.findOne(id);
+    console.log(data);
     let list: List;
     if (data.listId) {
       list = await this.listService.findOne(data.listId);
