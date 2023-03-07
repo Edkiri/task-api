@@ -1,5 +1,6 @@
 import {
   IsBoolean,
+  IsDate,
   IsNotEmpty,
   IsNumber,
   IsOptional,
@@ -31,4 +32,8 @@ export class UpdateTodoDto {
   @IsPositive()
   @IsOptional()
   listId?: number;
+
+  @IsDate()
+  @IsOptional()
+  expiresOn?: Date;
 }

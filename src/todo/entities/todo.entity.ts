@@ -16,6 +16,9 @@ export class Todo extends BaseEntity {
   @Column({ type: 'boolean', default: false })
   today: boolean;
 
+  @Column({ type: 'timestamp', nullable: true })
+  expiresOn: Date;
+
   @ManyToOne(() => List, { nullable: true, onDelete: 'CASCADE' })
   @JoinColumn({ name: 'list_id' })
   list?: List;
