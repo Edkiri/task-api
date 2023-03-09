@@ -8,6 +8,8 @@ import { environments } from './enviroments';
 import { TodosModule } from './todo/todo.module';
 import { ListModule } from './list/list.module';
 import { SeederModule } from './seeder/seeder.module';
+import { AuthModule } from './auth/auth.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -21,6 +23,8 @@ import { SeederModule } from './seeder/seeder.module';
     TodosModule,
     ListModule,
     SeederModule,
+    AuthModule,
+    UserModule,
   ],
   controllers: [],
   providers: [],

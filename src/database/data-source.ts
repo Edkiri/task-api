@@ -2,7 +2,8 @@ import { DataSource, DataSourceOptions } from 'typeorm';
 import * as dotenv from 'dotenv';
 import { Todo } from 'src/todo/entities/todo.entity';
 import { List } from 'src/list/entities/list.entity';
-import { init1678205730610 } from './migrations/1678205730610-init';
+import { User } from 'src/user/entities/user.entity';
+import { init1678364967974 } from './migrations/1678364967974-init';
 
 dotenv.config({
   path: '.env',
@@ -11,8 +12,8 @@ dotenv.config({
 export const dataSourceOptions: DataSourceOptions = {
   type: 'postgres',
   url: process.env.DATABASE_URL,
-  entities: [Todo, List],
-  migrations: [init1678205730610],
+  entities: [Todo, List, User],
+  migrations: [init1678364967974],
   synchronize: false,
   logging: false,
   ssl:
