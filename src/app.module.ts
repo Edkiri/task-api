@@ -10,6 +10,7 @@ import { ListModule } from './list/list.module';
 import { SeederModule } from './seeder/seeder.module';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
+import { PassportModule } from '@nestjs/passport';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { UserModule } from './user/user.module';
       validationSchema: configSchema,
     }),
     TypeOrmModule.forRoot(dataSourceOptions),
+    PassportModule.register({ session: true }),
     TodosModule,
     ListModule,
     SeederModule,
