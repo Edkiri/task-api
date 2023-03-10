@@ -19,6 +19,7 @@ async function bootstrap() {
       },
     }),
   );
+  app.enableCors({ origin: 'http://localhost:5173', credentials: true });
 
   const sessionRepository = app.get(DataSource).getRepository(SessionEntity);
 
@@ -40,7 +41,6 @@ async function bootstrap() {
   app.use(passport.session());
 
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
-  app.enableCors();
   await app.listen(3000);
 }
 bootstrap();
