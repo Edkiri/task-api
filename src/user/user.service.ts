@@ -11,6 +11,11 @@ export class UserService {
     @InjectRepository(User) private readonly userRepo: Repository<User>,
   ) {}
 
+  async createUserFromGoogle(email: string, displayName: string) {
+    const newUser = this.userRepo.create({ email, displayName });
+    return this.userRepo.save(newUser);
+  }
+
   async create(data: CreateUserDto) {
     const oldEmailUser = await this.userRepo.findOne({
       where: { email: data.email },
@@ -19,12 +24,6 @@ export class UserService {
       throw new BadRequestException(
         'An account with this email already exists',
       );
-    }
-    const oldUsernameUser = await this.userRepo.findOne({
-      where: { email: data.email },
-    });
-    if (oldUsernameUser) {
-      throw new BadRequestException('Username already in use');
     }
     const newUser = this.userRepo.create(data);
     const hashPassword = await bcrypt.hash(data.password, 10);

@@ -11,6 +11,6 @@ export class User extends BaseEntity {
   displayName: string;
 
   @Exclude()
-  @Column({ type: 'varchar', length: 255 })
+  @Column({ type: 'varchar', length: 255, nullable: true })
   password: string;
 }

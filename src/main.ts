@@ -28,10 +28,12 @@ async function bootstrap() {
       secret: process.env.SECRET,
       saveUninitialized: false,
       resave: false,
-      store: new TypeormStore().connect(sessionRepository),
       cookie: {
-        maxAge: 60000,
+        maxAge: 86400000,
       },
+      store: new TypeormStore({
+        cleanupLimit: 10,
+      }).connect(sessionRepository),
     }),
   );
   app.use(passport.initialize());

@@ -9,7 +9,10 @@ export class AuthService {
   async validateUserOauth(userData) {
     const user = await this.userService.findByEmail(userData.email);
     if (user) return user;
-    const newUser = await this.userService.create(userData);
+    const newUser = await this.userService.createUserFromGoogle(
+      userData.email,
+      userData.displayName,
+    );
     return newUser;
   }
 

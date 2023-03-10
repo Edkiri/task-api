@@ -7,12 +7,15 @@ import {
   ParseIntPipe,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
+import { AuthenticatedGuard } from 'src/auth/guards/authenticated.guard';
 import { CreateListDto } from '../dto/create-list.dto';
 import { UpdateListDto } from '../dto/update-list.dto';
 import { ListService } from '../services/list.service';
 
 @Controller('list')
+@UseGuards(AuthenticatedGuard)
 export class ListController {
   constructor(private readonly listService: ListService) {}
 
