@@ -1,3 +1,4 @@
+import { Exclude } from 'class-transformer';
 import { BaseEntity } from 'src/database/entities/base.entity';
 import { Column, Entity } from 'typeorm';
 
@@ -8,4 +9,8 @@ export class User extends BaseEntity {
 
   @Column('varchar', { name: 'display_name' })
   displayName: string;
+
+  @Exclude()
+  @Column({ type: 'varchar', length: 255 })
+  password: string;
 }

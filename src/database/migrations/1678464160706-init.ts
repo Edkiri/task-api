@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class init1678364967974 implements MigrationInterface {
-  name = 'init1678364967974';
+export class init1678464160706 implements MigrationInterface {
+  name = 'init1678464160706';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
@@ -11,7 +11,13 @@ export class init1678364967974 implements MigrationInterface {
       `CREATE TABLE "todos" ("id" SERIAL NOT NULL, "created_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "updated_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "content" character varying(255) NOT NULL, "done" boolean NOT NULL DEFAULT false, "important" boolean NOT NULL DEFAULT false, "today" boolean NOT NULL DEFAULT false, "expiresOn" TIMESTAMP, "list_id" integer, CONSTRAINT "PK_ca8cafd59ca6faaf67995344225" PRIMARY KEY ("id"))`,
     );
     await queryRunner.query(
-      `CREATE TABLE "users" ("id" SERIAL NOT NULL, "created_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "updated_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "email" character varying NOT NULL, "display_name" character varying NOT NULL, CONSTRAINT "PK_a3ffb1c0c8416b9fc6f907b7433" PRIMARY KEY ("id"))`,
+      `CREATE TABLE "users" ("id" SERIAL NOT NULL, "created_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "updated_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "email" character varying NOT NULL, "display_name" character varying NOT NULL, "password" character varying(255) NOT NULL, CONSTRAINT "PK_a3ffb1c0c8416b9fc6f907b7433" PRIMARY KEY ("id"))`,
+    );
+    await queryRunner.query(
+      `CREATE TABLE "sessions" ("id" character varying(255) NOT NULL, "expiredAt" bigint NOT NULL, "json" text NOT NULL, "destroyedAt" TIMESTAMP, CONSTRAINT "PK_3238ef96f18b355b671619111bc" PRIMARY KEY ("id"))`,
+    );
+    await queryRunner.query(
+      `CREATE INDEX "IDX_4c1989542e47d9e3b98fe32c67" ON "sessions" ("expiredAt") `,
     );
     await queryRunner.query(
       `ALTER TABLE "todos" ADD CONSTRAINT "FK_f4864acd42448f7170d352429e6" FOREIGN KEY ("list_id") REFERENCES "lists"("id") ON DELETE CASCADE ON UPDATE NO ACTION`,
@@ -22,6 +28,10 @@ export class init1678364967974 implements MigrationInterface {
     await queryRunner.query(
       `ALTER TABLE "todos" DROP CONSTRAINT "FK_f4864acd42448f7170d352429e6"`,
     );
+    await queryRunner.query(
+      `DROP INDEX "public"."IDX_4c1989542e47d9e3b98fe32c67"`,
+    );
+    await queryRunner.query(`DROP TABLE "sessions"`);
     await queryRunner.query(`DROP TABLE "users"`);
     await queryRunner.query(`DROP TABLE "todos"`);
     await queryRunner.query(`DROP TABLE "lists"`);

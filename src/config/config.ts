@@ -2,6 +2,7 @@ import { registerAs } from '@nestjs/config';
 
 export default registerAs('config', () => {
   return {
+    secret: process.env.SECRET,
     postgresUrl: process.env.DATABASE_URL,
     jwtSecret: process.env.JWT_SECRET,
     env: process.env.ENVIROMENT || 'development',
