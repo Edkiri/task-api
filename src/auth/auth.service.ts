@@ -9,13 +9,15 @@ export class AuthService {
 
   async validateUserOauth(userData: GoogleProfileType) {
     const user = await this.userService.findByEmail(userData.email);
-    if (user.avatarUrl !== userData.avatarUrl) {
-      const updatedUser = await this.userService.update(user.id, {
-        avatarUrl: userData.avatarUrl,
-      });
-      return updatedUser;
+    if (user) {
+      if (user.avatarUrl !== userData.avatarUrl) {
+        const updatedUser = await this.userService.update(user.id, {
+          avatarUrl: userData.avatarUrl,
+        });
+        return updatedUser;
+      }
+      return user;
     }
-    if (user) return user;
     const newUser = await this.userService.createUserFromGoogle(
       userData.email,
       userData.displayName,

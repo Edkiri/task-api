@@ -2,25 +2,31 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { List } from 'src/list/entities/list.entity';
 import { ListService } from 'src/list/services/list.service';
+import { UserService } from 'src/user/user.service';
 import { Repository } from 'typeorm';
 import { CreateTodoDto } from './dtos/create-todo.dto';
 import { UpdateTodoDto } from './dtos/update-todo.dto';
 import { Todo } from './entities/todo.entity';
 
 @Injectable()
-export class TodosService {
+export class TodoService {
   constructor(
     @InjectRepository(Todo) private readonly todosRepo: Repository<Todo>,
     private readonly listService: ListService,
+    private readonly userService: UserService,
   ) {}
 
-  async find() {
-    return this.todosRepo.find({ relations: { list: true } });
+  async findUserTodos(userId: number) {
+    return this.todosRepo.find({
+      where: { user: { id: userId } },
+      relations: { list: true },
+    });
   }
 
-  async findOne(id: number) {
+  async findOneOrFail(id: number) {
     const todo = await this.todosRepo.findOne({
       where: { id },
+      relations: { list: true, user: true },
     });
     if (!todo) {
       throw new NotFoundException(`Todo #${id} not found`);
@@ -28,8 +34,10 @@ export class TodosService {
     return todo;
   }
 
-  async create(data: CreateTodoDto) {
+  async create(userId: number, data: CreateTodoDto) {
     const newTodo = this.todosRepo.create(data);
+    const user = await this.userService.findOneOrFail(userId);
+    newTodo.user = user;
     let list: List;
     if (data.listId) {
       list = await this.listService.findOne(data.listId);
@@ -40,21 +48,13 @@ export class TodosService {
   }
 
   async updateOne(id: number, data: UpdateTodoDto) {
-    const oldTodo = await this.findOne(id);
-    console.log(data);
-    let list: List;
-    if (data.listId) {
-      list = await this.listService.findOne(data.listId);
-    }
-    oldTodo.list = list;
+    const oldTodo = await this.findOneOrFail(id);
     this.todosRepo.merge(oldTodo, data);
-
-    const todo = await this.todosRepo.save(oldTodo);
-    return todo;
+    return this.todosRepo.save(oldTodo);
   }
 
   async delete(id: number) {
-    const todoToDelete = await this.findOne(id);
+    const todoToDelete = await this.findOneOrFail(id);
     await this.todosRepo.remove(todoToDelete);
     return {
       message: `Todo with id ${id} has been deleted`,

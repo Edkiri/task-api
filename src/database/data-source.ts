@@ -4,7 +4,7 @@ import { Todo } from 'src/todo/entities/todo.entity';
 import { List } from 'src/list/entities/list.entity';
 import { User } from 'src/user/entities/user.entity';
 import { SessionEntity } from 'src/auth/entities/session.entity';
-import { init1678541175289 } from './migrations/1678541175289-init';
+import { init1678543579382 } from './migrations/1678543579382-init';
 
 dotenv.config({
   path: '.env',
@@ -14,7 +14,7 @@ export const dataSourceOptions: DataSourceOptions = {
   type: 'postgres',
   url: process.env.DATABASE_URL,
   entities: [Todo, List, User, SessionEntity],
-  migrations: [init1678541175289],
+  migrations: [init1678543579382],
   synchronize: false,
   logging: false,
   ssl:

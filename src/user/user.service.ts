@@ -45,13 +45,18 @@ export class UserService {
     return this.userRepo.findOne({ where: { id } });
   }
 
-  async update(id: number, data: UpdateUserDto) {
-    const user = await this.userRepo.findOne({
-      where: { id },
-    });
+  async findOneOrFail(id: number) {
+    const user = this.userRepo.findOne({ where: { id } });
     if (!user) {
       throw new BadRequestException(`User with id '${id}' not found`);
     }
+    return user;
+  }
+
+  async update(id: number, data: UpdateUserDto) {
+    const user = await this.userRepo.findOneOrFail({
+      where: { id },
+    });
     this.userRepo.merge(user, data);
     return this.userRepo.save(user);
   }
