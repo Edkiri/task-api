@@ -19,7 +19,7 @@ async function bootstrap() {
       },
     }),
   );
-  app.enableCors({ origin: 'http://localhost:5173', credentials: true });
+  app.enableCors({ origin: process.env.FRONTEND_HOST, credentials: true });
 
   const sessionRepository = app.get(DataSource).getRepository(SessionEntity);
 
@@ -30,7 +30,7 @@ async function bootstrap() {
       saveUninitialized: false,
       resave: false,
       cookie: {
-        maxAge: 86400000,
+        maxAge: 1408000,
       },
       store: new TypeormStore({
         cleanupLimit: 10,

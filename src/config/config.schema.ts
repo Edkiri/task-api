@@ -1,6 +1,7 @@
 import * as Joi from 'joi';
 
 const configSchema = Joi.object({
+  FRONTEND_HOST: Joi.string().required(),
   SECRET: Joi.string().required(),
   DATABASE_URL: Joi.string().required(),
   ADMIN_EMAIL: Joi.string().required(),
