@@ -15,7 +15,7 @@ import { AuthenticatedGuard } from 'src/auth/guards/authenticated.guard';
 import { User } from 'src/user/entities/user.entity';
 import { CreateTodoDto } from './dtos/create-todo.dto';
 import { UpdateTodoDto } from './dtos/update-todo.dto';
-import { IsTodoOwner } from './guards/is-todo-owner';
+import { IsTodoOwner } from './guards/is-todo-owner.guard';
 import { TodoService } from './todo.service';
 
 @Controller('todos')

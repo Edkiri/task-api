@@ -4,6 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { UserService } from 'src/user/user.service';
 import slugify from 'src/utils/slugify';
 import { Repository } from 'typeorm';
 import { CreateListDto } from '../dto/create-list.dto';
@@ -15,15 +16,17 @@ export class ListService {
   constructor(
     @InjectRepository(List)
     private readonly listRepo: Repository<List>,
+    private readonly userService: UserService,
   ) {}
 
-  async find() {
-    return this.listRepo.find();
+  async find(userId: number) {
+    return this.listRepo.find({ where: { user: { id: userId } } });
   }
 
   async findOne(id: number) {
     const list = await this.listRepo.findOne({
       where: { id },
+      relations: { user: true },
     });
     if (!list) {
       throw new NotFoundException(`List with id #${id} not found`);
@@ -38,15 +41,16 @@ export class ListService {
     return list;
   }
 
-  async create(data: CreateListDto) {
+  async create(userId: number, data: CreateListDto) {
     const slugName = slugify(data.title);
     const oldList = await this.findOneBySlugName(slugName);
     if (oldList)
       throw new BadRequestException(
         `A list with slug '${slugName}' already exists'`,
       );
-    data['slugName'] = slugName;
-    const newList = this.listRepo.create(data);
+    const user = await this.userService.findOneOrFail(userId);
+    const newList = this.listRepo.create({ ...data, slugName });
+    newList.user = user;
     const list = await this.listRepo.save(newList);
     return list;
   }
