@@ -4,6 +4,7 @@ import { Column, Entity } from 'typeorm';
 
 @Entity('users')
 export class User extends BaseEntity {
+  @Exclude()
   @Column('varchar')
   email: string;
 
@@ -13,4 +14,7 @@ export class User extends BaseEntity {
   @Exclude()
   @Column({ type: 'varchar', length: 255, nullable: true })
   password: string;
+
+  @Column({ name: 'avatar_url', type: 'varchar', nullable: true })
+  avatarUrl: string;
 }

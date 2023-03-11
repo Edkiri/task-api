@@ -13,17 +13,13 @@ export class AuthController {
 
   @Get('google/login')
   @UseGuards(GoogleAuthGuard)
-  handleLogin() {
-    return {
-      message: 'Google login',
-    };
+  handleLogin(@Req() req: Request) {
+    return req.user;
   }
 
   @Get('google/redirect')
   @UseGuards(GoogleAuthGuard)
-  handleRedirect() {
-    return {
-      message: 'OK',
-    };
+  handleRedirect(@Req() req: Request) {
+    return req.user;
   }
 }
