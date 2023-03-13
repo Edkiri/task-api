@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { UserService } from 'src/user/user.service';
 import * as bcrypt from 'bcrypt';
 import { GoogleProfileType } from './types/google-profile';
+import { Session } from 'express-session';
 
 @Injectable()
 export class AuthService {
@@ -39,5 +40,17 @@ export class AuthService {
 
   async findUser(userId: number) {
     return this.userService.findOne(userId);
+  }
+
+  logout(session: Session) {
+    session.destroy((err) => {
+      if (err) {
+        console.log(err);
+      }
+    });
+    return {
+      message: 'Logout succesfull',
+      status: 200,
+    };
   }
 }
