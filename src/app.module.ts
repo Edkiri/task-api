@@ -11,6 +11,7 @@ import { SeederModule } from './seeder/seeder.module';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { PassportModule } from '@nestjs/passport';
+import { AppController } from './app.controller';
 
 @Module({
   imports: [
@@ -28,7 +29,7 @@ import { PassportModule } from '@nestjs/passport';
     AuthModule,
     UserModule,
   ],
-  controllers: [],
+  controllers: [AppController],
   providers: [],
 })
 export class AppModule {}
