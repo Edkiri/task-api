@@ -19,7 +19,7 @@ async function bootstrap() {
       },
     }),
   );
-  app.enableCors({ origin: process.env.FRONTEND_HOST, credentials: true });
+  app.enableCors({ origin: [process.env.FRONTEND_HOST], credentials: true });
 
   const sessionRepository = app.get(DataSource).getRepository(SessionEntity);
 
@@ -41,6 +41,6 @@ async function bootstrap() {
   app.use(passport.session());
 
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
-  await app.listen(3000);
+  await app.listen(process.env.PORT || 3000);
 }
 bootstrap();
