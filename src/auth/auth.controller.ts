@@ -2,18 +2,17 @@ import {
   Controller,
   Get,
   Post,
-  Redirect,
   Req,
   Session as SessionDecorator,
   UseGuards,
 } from '@nestjs/common';
-import { Request } from 'express';
+import { Request, Response } from 'express';
 import { GoogleAuthGuard } from './guards/google.guard';
 import { LocalGuard } from './guards/local.guard';
 import { AuthenticatedGuard } from './guards/authenticated.guard';
 import { Session } from 'express-session';
 import { AuthService } from './auth.service';
-import { Inject } from '@nestjs/common/decorators';
+import { Inject, Res } from '@nestjs/common/decorators';
 
 @Controller('auth')
 export class AuthController {
@@ -32,9 +31,8 @@ export class AuthController {
 
   @Get('google/redirect')
   @UseGuards(GoogleAuthGuard)
-  @Redirect(process.env.FRONTEND_HOST, 201)
-  handleRedirect() {
-    return;
+  handleRedirect(@Res() res: Response) {
+    return res.redirect(301, process.env.FRONTEND_HOST);
   }
 
   @Post('logout')
