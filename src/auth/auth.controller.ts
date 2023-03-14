@@ -26,14 +26,18 @@ export class AuthController {
 
   @Get('google/login')
   @UseGuards(GoogleAuthGuard)
-  handleLogin() {
+  handleLogin(@Req() req: Request) {
+    console.log('Google login from google auth');
+    console.log(req);
     return;
   }
 
   @Get('google/redirect')
   @UseGuards(GoogleAuthGuard)
   @Redirect(process.env.FRONTEND_HOST, 301)
-  handleRedirect() {
+  handleRedirect(@Req() req: Request) {
+    console.log('Redirect from google auth');
+    console.log(req.session.cookie);
     return;
   }
 
