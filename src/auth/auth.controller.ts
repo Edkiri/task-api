@@ -31,8 +31,8 @@ export class AuthController {
   }
 
   @Get('google/redirect')
-  @Redirect(process.env.FRONTEND_HOST, 301)
   @UseGuards(GoogleAuthGuard)
+  @Redirect(process.env.FRONTEND_HOST, 301)
   handleRedirect() {
     return;
   }
