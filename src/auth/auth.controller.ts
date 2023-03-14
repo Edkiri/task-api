@@ -32,7 +32,7 @@ export class AuthController {
 
   @Get('google/redirect')
   @UseGuards(GoogleAuthGuard)
-  @Redirect(process.env.FRONTEND_HOST, 301)
+  @Redirect(process.env.FRONTEND_HOST, 201)
   handleRedirect() {
     return;
   }
